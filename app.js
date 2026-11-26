@@ -1,6 +1,8 @@
 // Sellora AI - app.js - كامل - معدل
-// التعديل: API_BASE - كل طلبات /api بتمشي للـ Worker مباشرة
-const API_BASE = 'https://sellora-ai-api.XXX.workers.dev'; // غير XXX برابط الـ Worker الحقيقي
+// التعديل: API_BASE معرف في index.html فقط - لا تعيد تعريفه هنا عشان ما يديك has already been declared
+// كل طلبات /api بتمشي للـ Worker مباشرة
+// لو API_BASE ما موجود، استخدم الرابط ده كـ fallback بدون ما تعرف const جديد
+if (typeof window.API_BASE_FALLBACK === 'undefined') { window.API_BASE_FALLBACK = 'https://sellora-ai-api.mohosamazx3.workers.dev'; }
 let token = localStorage.getItem('sellora_token') || localStorage.getItem('tajer_token') || '';
 let user = null;
 let todayCount = 0;
@@ -77,7 +79,6 @@ function showHilltopAd() {
   const wrap = document.getElementById('hilltopWrap'); const container = document.getElementById('hilltopContainer'); if (!wrap || !container) return;
   container.innerHTML = ''; wrap.style.display = 'block';
   const s = document.createElement('script'); s.setAttribute('data-cfasync', 'false');
-  // TODO: استبدل HILLTOP_ZONE_ID_هنا بالـ Zone ID الحقيقي من HilltopAds - الرابط الحالي وهمي وما حيشتغل لحد ما تغيرو
   s.src = 'https://cdn.hilltopads.com/xxx.js?zone=HILLTOP_ZONE_ID_هنا&cb=' + Date.now() + '_' + Math.floor(Math.random() * 1000000000);
   container.appendChild(s);
 }
