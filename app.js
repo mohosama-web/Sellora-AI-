@@ -1,6 +1,6 @@
 // Sellora AI - app.js - الحفظ في جهاز المستخدم فقط - معدل لـ /dash
-const API_BASE = 'https://sellora-ai-api.mohosamazx3.workers.dev';
-const SITE_URL = 'https://sellora-ai-8i7.pages.dev';
+const API_BASE = window.API_BASE || 'https://sellora-ai-api.mohosamazx3.workers.dev';
+const SITE_URL = window.SITE_URL || 'https://sellora-ai-8i7.pages.dev';
 let token = localStorage.getItem('sellora_token') || localStorage.getItem('tajer_token') || '';
 let user = null;
 let todayCount = 0;
