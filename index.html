@@ -222,7 +222,6 @@ button:active{transform:scale(.95);box-shadow:0 0 20px rgba(0,255,136,.9)!import
 function getUserId(){ const token = localStorage.getItem('token') || localStorage.getItem('sellora_token') || ''; if(!token) return 'guest'; try{ const payload = JSON.parse(atob(token.split('.')[1])); return payload.email || payload.sub || 'guest'; }catch(e){ return 'guest'; } }
 function saveToDevice(key, value){ const userId = getUserId(); try{ localStorage.setItem(`sellora_${userId}_${key}`, typeof value === 'string' ? value : JSON.stringify(value)); }catch(e){} }
 function saveLoginData(user, token){ if(!user) return; saveToDevice('login', { token, email: user.email, name: user.name, pic: user.pic || user.picture || '', lastLogin: Date.now() }); saveToDevice('profile', { name: user.name, email: user.email, pic: user.pic || user.picture || '', phone: user.phone || '', shopName: user.shopName || '' }); }
-// ملاحظة: currentAdDateForImage و lastCreatedAdDate معرفين في app.js - ما تعرفهم هنا تاني عشان ما يضرب Duplicate
 function goToStudio(adDate){ if(!adDate) adDate = window.currentAdDateForImage || window.lastCreatedAdDate; if(!adDate){ alert('يرجى إنشاء الإعلان أولاً'); return; } window.location.href = window.SITE_URL + `/image-studio.html?adDate=${adDate}`; }
 function goToStudioFromDetail(){ goToStudio(window.currentAdDateForImage); }
 function goToStudioFromResult(){ goToStudio(window.lastCreatedAdDate || window.currentAdDateForImage); }
@@ -240,7 +239,6 @@ window.addEventListener('load', ()=>{ setTimeout(refreshImageCredits, 800); });
 </script>
 <script>(function(){ try{ var token = localStorage.getItem('token') || localStorage.getItem('sellora_token') || localStorage.getItem('tajer_token') || localStorage.getItem('jwt'); var trialMsg = document.getElementById('trialMsg'); var trialDone = document.getElementById('trialDoneBox'); if(token){ if(trialMsg) trialMsg.style.display='none'; if(trialDone) trialDone.style.display='none'; } }catch(e){} })();</script>
 <script>window.addEventListener('load', ()=>{ setTimeout(()=>{ if(typeof showSocialBarForce === 'function') showSocialBarForce('دخول الموقع - بعد 3 ثواني'); }, 3000); });</script>
-<script>async function fixGoogleLogin(){ try{ const cfg = await fetch(window.API_BASE + "/api/config").then(r=>r.json()); const clientId = cfg.googleClientId || "943446170068-r931vbq02vma0ev99173mu13jka15lsm.apps.googleusercontent.com"; if(!clientId) return; const el = document.getElementById("g_id_onload"); if(el) el.setAttribute("data-client_id", clientId); if(window.google && window.google.accounts && window.google.accounts.id && typeof window.onGoogleLogin === "function"){ window.google.accounts.id.initialize({ client_id: clientId, callback: window.onGoogleLogin }); } }catch(e){ console.log("Google fix failed", e); } } window.addEventListener("load", ()=>{ setTimeout(fixGoogleLogin, 500); });</script>
 <script src="app.js"></script>
 </body>
   </html>
